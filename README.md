@@ -31,3 +31,6 @@
    ```bash
    git clone https://github.com/your-username/Pet-Project.git
    cd Pet-Project
+   
+## Список задач 📝
+   https://github.com/w37p/Pet-Project/issues/1
