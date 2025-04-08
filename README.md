@@ -33,4 +33,4 @@
    cd Pet-Project
    
 ## Список задач 📝
-   https://github.com/w37p/Pet-Project/issues/1
+   [Test Task](https://github.com/w37p/Pet-Project/issues/1)
