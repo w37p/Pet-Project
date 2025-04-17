@@ -1,2 +1,4 @@
 .env
 backend/congig/.env
+backend/cmd/server.key
+backend/cmd/server.crt
