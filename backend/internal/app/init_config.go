@@ -6,9 +6,28 @@ import (
 )
 
 func (a *App) initConfig() {
+	// Логируем начало загрузки конфигурации
+	logrus.WithField("module", "config").Info("Start loading configuration")
+
 	cfg, err := configs.Load()
 	if err != nil {
-		logrus.WithField("module", "config").Fatalf("Config error: %v", err)
+		// Логируем ошибку и прерываем выполнение
+		logrus.
+			WithField("module", "config").
+			WithError(err).
+			Fatal("Failed to load configuration")
 	}
+
+	// При желании можно вывести ключевые поля конфига (не выводите чувствительные данные!)
+	logrus.
+		WithFields(logrus.Fields{
+			"module":      "config",
+			"http_port":   cfg.Server.HTTPPort,
+			"db_host":     cfg.Database.Host,
+			"db_name":     cfg.Database.Name,
+			"webhook_url": cfg.Telegram.WebhookURL,
+		}).
+		Info("Configuration loaded successfully")
+
 	a.cfg = cfg
 }

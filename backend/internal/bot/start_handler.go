@@ -1,9 +1,9 @@
-// internal/controller/telegram/start_handler.go
 package bot
 
 import (
 	"context"
-	"log"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/bullockz21/pet_project21/configs"
 	presenterUser "github.com/bullockz21/pet_project21/internal/modules/presenter/user"
@@ -15,13 +15,18 @@ type StartHandler struct {
 	userUC        *usecaseUser.UserUseCase
 	userPresenter *presenterUser.UserPresenter
 	config        *configs.Config
+	logger        *logrus.Logger
 }
 
 func NewStartHandler(userUC *usecaseUser.UserUseCase, userPresenter *presenterUser.UserPresenter, cfg *configs.Config) *StartHandler {
+	logger := logrus.New()
+	logger.SetLevel(logrus.InfoLevel)
+
 	return &StartHandler{
 		userUC:        userUC,
 		userPresenter: userPresenter,
 		config:        cfg,
+		logger:        logger,
 	}
 }
 
@@ -32,18 +37,24 @@ func (h *StartHandler) HandleStart(ctx context.Context, update tgbotapi.Update) 
 	firstName := update.Message.From.FirstName
 	language := update.Message.From.LanguageCode
 
-	// Вызываем usecase для создания пользователя
+	h.logger.WithFields(logrus.Fields{
+		"telegram_id": telegramID,
+		"username":    username,
+		"first_name":  firstName,
+		"language":    language,
+	}).Info("Обработка команды /start")
+
+	// Создание пользователя
 	if _, err := h.userUC.CreateUser(ctx, telegramID, username, firstName, language); err != nil {
-		log.Printf("[ERROR] HandleStart: %v", err)
+		h.logger.WithError(err).WithField("telegram_id", telegramID).Error("Не удалось создать пользователя")
 		h.userPresenter.PresentError(update.Message.Chat.ID, "Не удалось создать пользователя")
 		return
 	}
 
-	// Используем переданную конфигурацию для получения URL мини‑аппа.
 	miniAppURL := h.config.Telegram.WebhookURL
+	h.logger.WithField("mini_app_url", miniAppURL).Info("Отправка приветственного сообщения с кнопкой MiniApp")
 
-	// Отправляем приветственное сообщение с кнопкой для открытия мини‑аппа
 	if err := h.userPresenter.PresentWelcomeMessage(update.Message.Chat.ID, firstName, miniAppURL); err != nil {
-		log.Printf("Ошибка отправки приветственного сообщения: %v", err)
+		h.logger.WithError(err).WithField("chat_id", update.Message.Chat.ID).Error("Ошибка отправки приветственного сообщения")
 	}
 }

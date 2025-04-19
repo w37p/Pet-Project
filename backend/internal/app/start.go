@@ -1,15 +1,17 @@
 package app
 
 import (
-	"log"
+	"github.com/sirupsen/logrus"
 )
 
 func (a *App) start() {
 	defer a.closeDB()
 
-	log.Printf("Бот запущен: %s", a.bot.Self.UserName)
+	log := logrus.WithField("module", "app")
+
+	log.Infof("🚀 Бот запущен: %s", a.bot.Self.UserName)
 
 	if err := a.router.Run(":" + a.cfg.Server.HTTPPort); err != nil {
-		log.Fatalf("Ошибка запуска сервера: %v", err)
+		log.WithError(err).Fatal("❌ Ошибка запуска HTTP сервера")
 	}
 }

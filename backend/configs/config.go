@@ -7,6 +7,7 @@ import (
 
 	"github.com/caarlos0/env/v6"
 	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 )
 
 type ServerConfig struct {
@@ -36,22 +37,44 @@ type Config struct {
 }
 
 func Load() (*Config, error) {
-	_ = godotenv.Load("../../configs/.env")
+	log := logrus.WithField("module", "config")
+
+	log.Info("Loading .env file...")
+	if err := godotenv.Load("../../configs/.env"); err != nil {
+		log.Warn(".env file not found or failed to load, using environment variables")
+	} else {
+		log.Info(".env file loaded successfully")
+	}
 
 	var cfg Config
+
+	log.Info("Parsing server config...")
 	if err := env.Parse(&cfg.Server); err != nil {
+		log.WithError(err).Error("Failed to parse server config")
 		return nil, fmt.Errorf("load server config: %w", err)
 	}
+	log.Info("Server config loaded")
+
+	log.Info("Parsing database config...")
 	if err := env.Parse(&cfg.Database); err != nil {
+		log.WithError(err).Error("Failed to parse database config")
 		return nil, fmt.Errorf("load database config: %w", err)
 	}
+	log.Info("Database config loaded")
+
+	log.Info("Parsing telegram config...")
 	if err := env.Parse(&cfg.Telegram); err != nil {
+		log.WithError(err).Error("Failed to parse telegram config")
 		return nil, fmt.Errorf("load telegram config: %w", err)
 	}
+	log.Info("Telegram config loaded")
 
 	if !strings.HasPrefix(cfg.Telegram.WebhookURL, "https://") {
+		log.WithField("webhook_url", cfg.Telegram.WebhookURL).
+			Error("WEBHOOK_URL must start with https://")
 		return nil, fmt.Errorf("WEBHOOK_URL must start with https://")
 	}
 
+	log.Info("All configs loaded successfully")
 	return &cfg, nil
 }
