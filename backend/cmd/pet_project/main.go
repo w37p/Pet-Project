@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-	// Настройка логгера
 	logrus.SetLevel(logrus.InfoLevel)
 	logrus.SetFormatter(&logrus.TextFormatter{
 		FullTimestamp: true,

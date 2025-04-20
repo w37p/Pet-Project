@@ -1,8 +1,8 @@
-// @title Beer Bot API
+// @title Pet-project API
 // @version 1.0
 // @description Backend API for Telegram Beer Bot
 // @contact.name Кирилл
-// @contact.email kirill@example.com
+// @contact.email bullockzombie@gmail.com
 // @host localhost:8080
 // @BasePath /api/v1
 package router
