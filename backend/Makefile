@@ -1,4 +1,21 @@
 # Load environment variables from .env file
+export GOOSE_DRIVER=postgres
+export GOOSE_DBSTRING="postgres://$(DB_USER):$(DB_PASSWORD)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?sslmode=disable"
+
+migrate-status:
+	goose -dir migrations status
+
+migrate-down:
+	goose -dir migrations down
+
+migrate-reset:
+	goose -dir migrations reset
+
+migrate-up:
+	goose -dir migrations up
+
+
+
 ifneq (,$(wildcard ./.env))
 include .env
 export $(shell sed 's/=.*//' .env)
