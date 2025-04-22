@@ -14,7 +14,7 @@ import (
 	router "github.com/bullockz21/pet_project21/internal/router/v1"
 
 	//menu
-	//menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu"
+	menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu"
 	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/presenter/menu"
 	menuRepo "github.com/bullockz21/pet_project21/internal/modules/repository/menu"
 	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/usecase/menu"
@@ -26,12 +26,13 @@ import (
 )
 
 // initServer конфигурирует HTTP-сервер, регистрирует маршруты и Swagger.
+// internal/app/init_server.go
 func (a *App) initServer() {
 	logrus.Info("Initializing HTTP server and routes...")
 	handler := a.initHandlers()
 
 	logrus.Info("Setting up router with registered handlers...")
-	a.router = router.SetupRoutes(handler, a.db)
+	a.router = router.SetupRoutes(handler, a.db) // Добавьте передачу базы данных
 
 	logrus.Info("Adding Swagger UI endpoint at /swagger/*any...")
 	a.addSwagger()
@@ -45,9 +46,13 @@ func (a *App) initHandlers() *bot.Handler {
 	userUC := userUsecasePkg.NewUserUseCase(userRepo)
 	userPresenter := userPresenterPkg.NewUserPresenter(a.bot)
 
-	menuRep := menuRepo.NewMenuRepository(a.db)
-	menuUC := menuUsecase.NewMenuUseCase(menuRep)
+	// Инициализация меню (добавить в существующий код)
+	menuRepo := menuRepo.NewMenuRepository(a.db)
+	menuUC := menuUsecase.NewMenuUseCase(menuRepo)
 	menuPresenter := menuPresenter.NewMenuPresenter()
+
+	// Если нужно использовать в Telegram обработчиках:
+	menuHandler := menuCtrl.NewMenuController(menuUC, menuPresenter)
 
 	startHandler := telegramController.NewStartHandler(userUC, userPresenter, a.cfg)
 	commandHandler := telegramController.NewCommandHandler(startHandler, userPresenter)

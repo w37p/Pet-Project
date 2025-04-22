@@ -1,30 +1,23 @@
-// @title Pet-project API
-// @version 1.0
-// @description Backend API for Telegram Beer Bot
-// @contact.name Кирилл
-// @contact.email bullockzombie@gmail.com
-// @host localhost:8080
-// @BasePath /api/v1
 package router
 
 import (
 	"github.com/bullockz21/pet_project21/internal/bot"
+	menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu" // Исправленный путь
 	telegram "github.com/bullockz21/pet_project21/internal/controller/telegram/webhook"
-	"github.com/gin-gonic/gin"
-
-	//menu
-	menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu"
 	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/presenter/menu"
 	menuRepo "github.com/bullockz21/pet_project21/internal/modules/repository/menu"
 	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/usecase/menu"
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // SetupRoutes настраивает все маршруты Gin и возвращает роутер.
-func SetupRoutes(handler *bot.Handler) *gin.Engine {
+func SetupRoutes(handler *bot.Handler, db *gorm.DB) *gin.Engine { // Добавить db как параметр
 	router := gin.Default()
 
-	menuRepo := menuRepo.NewMenuRepository(db)
-	menuUC := menuUsecase.NewMenuUseCase(menuRepo)
+	// Инициализация компонентов меню
+	menuRepository := menuRepo.NewMenuRepository(db)
+	menuUC := menuUsecase.NewMenuUseCase(menuRepository)
 	menuPresenter := menuPresenter.NewMenuPresenter()
 	menuController := menuCtrl.NewMenuController(menuUC, menuPresenter)
 
@@ -33,7 +26,6 @@ func SetupRoutes(handler *bot.Handler) *gin.Engine {
 		apiV1.POST("/webhook", telegram.WebhookHandler(handler))
 		apiV1.GET("/ping", telegram.PingHandler)
 		apiV1.GET("/menu", menuController.GetMenu)
-
 	}
 
 	return router

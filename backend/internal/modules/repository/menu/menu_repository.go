@@ -88,5 +88,13 @@ func (r *MenuRepository) FindByCategory(ctx context.Context, categoryID int) ([]
 
 	return domainItems, nil
 }
+func (r *MenuRepository) FindByID(ctx context.Context, id domain.MenuID) (*domain.MenuItem, error) {
+	var item entity.MenuItem
+	result := r.db.WithContext(ctx).First(&item, id)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return r.entityToDomain(&item), nil
+}
 
 // Реализуйте остальные методы аналогично

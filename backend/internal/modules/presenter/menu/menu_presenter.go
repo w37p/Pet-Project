@@ -18,7 +18,8 @@ type MenuItemResponse struct {
 	ImageURL    string  `json:"image_url"`
 }
 
-func (p *MenuPresenter) Present(items []*domain.MenuItem) []MenuItemResponse {
+// Измените название метода
+func (p *MenuPresenter) PresentMenu(items []*domain.MenuItem) []MenuItemResponse {
 	response := make([]MenuItemResponse, len(items))
 	for i, item := range items {
 		response[i] = MenuItemResponse{
