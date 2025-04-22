@@ -3,12 +3,23 @@ package app
 import (
 	_ "github.com/bullockz21/pet_project21/docs"
 	"github.com/bullockz21/pet_project21/internal/bot"
+
+	//user
 	telegramController "github.com/bullockz21/pet_project21/internal/bot"
 	userPresenterPkg "github.com/bullockz21/pet_project21/internal/modules/presenter/user"
 	userRepositoryPkg "github.com/bullockz21/pet_project21/internal/modules/repository/user"
 	userUsecasePkg "github.com/bullockz21/pet_project21/internal/modules/usecase/user"
+
+	//router
 	router "github.com/bullockz21/pet_project21/internal/router/v1"
 
+	//menu
+	//menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu"
+	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/presenter/menu"
+	menuRepo "github.com/bullockz21/pet_project21/internal/modules/repository/menu"
+	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/usecase/menu"
+
+	//swagger
 	"github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -20,7 +31,7 @@ func (a *App) initServer() {
 	handler := a.initHandlers()
 
 	logrus.Info("Setting up router with registered handlers...")
-	a.router = router.SetupRoutes(handler)
+	a.router = router.SetupRoutes(handler, a.db)
 
 	logrus.Info("Adding Swagger UI endpoint at /swagger/*any...")
 	a.addSwagger()
@@ -33,6 +44,10 @@ func (a *App) initHandlers() *bot.Handler {
 	userRepo := userRepositoryPkg.NewUserRepository(a.db)
 	userUC := userUsecasePkg.NewUserUseCase(userRepo)
 	userPresenter := userPresenterPkg.NewUserPresenter(a.bot)
+
+	menuRep := menuRepo.NewMenuRepository(a.db)
+	menuUC := menuUsecase.NewMenuUseCase(menuRep)
+	menuPresenter := menuPresenter.NewMenuPresenter()
 
 	startHandler := telegramController.NewStartHandler(userUC, userPresenter, a.cfg)
 	commandHandler := telegramController.NewCommandHandler(startHandler, userPresenter)

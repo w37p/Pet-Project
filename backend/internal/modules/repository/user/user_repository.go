@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/bullockz21/pet_project21/internal/modules/domain"
-	entityUser "github.com/bullockz21/pet_project21/internal/modules/entity/user"
+	entityUser "github.com/bullockz21/pet_project21/internal/modules/entity"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )

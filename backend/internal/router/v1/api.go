@@ -11,16 +11,28 @@ import (
 	"github.com/bullockz21/pet_project21/internal/bot"
 	telegram "github.com/bullockz21/pet_project21/internal/controller/telegram/webhook"
 	"github.com/gin-gonic/gin"
+
+	//menu
+	menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu"
+	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/presenter/menu"
+	menuRepo "github.com/bullockz21/pet_project21/internal/modules/repository/menu"
+	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/usecase/menu"
 )
 
 // SetupRoutes настраивает все маршруты Gin и возвращает роутер.
 func SetupRoutes(handler *bot.Handler) *gin.Engine {
 	router := gin.Default()
 
+	menuRepo := menuRepo.NewMenuRepository(db)
+	menuUC := menuUsecase.NewMenuUseCase(menuRepo)
+	menuPresenter := menuPresenter.NewMenuPresenter()
+	menuController := menuCtrl.NewMenuController(menuUC, menuPresenter)
+
 	apiV1 := router.Group("/api/v1")
 	{
 		apiV1.POST("/webhook", telegram.WebhookHandler(handler))
 		apiV1.GET("/ping", telegram.PingHandler)
+		apiV1.GET("/menu", menuController.GetMenu)
 
 	}
 
