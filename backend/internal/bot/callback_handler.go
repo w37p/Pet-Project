@@ -3,7 +3,7 @@ package bot
 import (
 	"context"
 
-	buttons "github.com/bullockz21/pet_project21/internal/bot"
+	buttons "github.com/bullockz21/pet_project21/internal/bot/buttons"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/sirupsen/logrus"
 )

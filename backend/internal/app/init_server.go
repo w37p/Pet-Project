@@ -14,7 +14,7 @@ import (
 	router "github.com/bullockz21/pet_project21/internal/router/v1"
 
 	//menu
-	menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu"
+	menuCtrl "github.com/bullockz21/pet_project21/internal/http/controller/telegram/menu"
 	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/menu/presenter"
 	menuRepo "github.com/bullockz21/pet_project21/internal/modules/menu/repository"
 	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/menu/usecase"
