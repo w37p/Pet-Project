@@ -11,7 +11,7 @@ import (
 	userUsecasePkg "github.com/bullockz21/pet_project21/internal/modules/user/usecase"
 
 	//router
-	router "github.com/bullockz21/pet_project21/internal/router/v1"
+	router "github.com/bullockz21/pet_project21/internal/routers/v1"
 
 	//menu
 	menuCtrl "github.com/bullockz21/pet_project21/internal/http/controller/telegram/menu"
