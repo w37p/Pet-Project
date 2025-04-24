@@ -3,8 +3,8 @@ package menu
 import (
 	"net/http"
 
-	presenter "github.com/bullockz21/pet_project21/internal/modules/presenter/menu"
-	usecase "github.com/bullockz21/pet_project21/internal/modules/usecase/menu"
+	presenter "github.com/bullockz21/pet_project21/internal/modules/menu/presenter"
+	usecase "github.com/bullockz21/pet_project21/internal/modules/menu/usecase"
 	"github.com/gin-gonic/gin"
 )
 

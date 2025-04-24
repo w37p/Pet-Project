@@ -6,18 +6,18 @@ import (
 
 	//user
 	telegramController "github.com/bullockz21/pet_project21/internal/bot"
-	userPresenterPkg "github.com/bullockz21/pet_project21/internal/modules/presenter/user"
-	userRepositoryPkg "github.com/bullockz21/pet_project21/internal/modules/repository/user"
-	userUsecasePkg "github.com/bullockz21/pet_project21/internal/modules/usecase/user"
+	userPresenterPkg "github.com/bullockz21/pet_project21/internal/modules/user/presenter"
+	userRepositoryPkg "github.com/bullockz21/pet_project21/internal/modules/user/repository"
+	userUsecasePkg "github.com/bullockz21/pet_project21/internal/modules/user/usecase"
 
 	//router
 	router "github.com/bullockz21/pet_project21/internal/router/v1"
 
 	//menu
 	menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu"
-	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/presenter/menu"
-	menuRepo "github.com/bullockz21/pet_project21/internal/modules/repository/menu"
-	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/usecase/menu"
+	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/menu/presenter"
+	menuRepo "github.com/bullockz21/pet_project21/internal/modules/menu/repository"
+	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/menu/usecase"
 
 	//swagger
 	"github.com/sirupsen/logrus"

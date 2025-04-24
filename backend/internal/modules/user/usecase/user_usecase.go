@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/bullockz21/pet_project21/internal/modules/domain"
+	"github.com/bullockz21/pet_project21/internal/modules/user/domain"
 	"github.com/sirupsen/logrus"
 )
 

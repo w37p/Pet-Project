@@ -1,7 +1,7 @@
 // internal/modules/presenter/menu/menu_presenter.go
 package menu
 
-import "github.com/bullockz21/pet_project21/internal/modules/domain"
+import "github.com/bullockz21/pet_project21/internal/modules/menu/domain"
 
 type MenuPresenter struct{}
 

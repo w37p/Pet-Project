@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/bullockz21/pet_project21/internal/modules/domain"
-	"github.com/bullockz21/pet_project21/internal/modules/entity"
+	"github.com/bullockz21/pet_project21/internal/modules/menu/domain"
+	"github.com/bullockz21/pet_project21/internal/modules/menu/entity"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )

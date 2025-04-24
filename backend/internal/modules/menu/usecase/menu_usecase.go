@@ -3,7 +3,7 @@ package usecase
 import (
 	"context"
 
-	"github.com/bullockz21/pet_project21/internal/modules/domain"
+	"github.com/bullockz21/pet_project21/internal/modules/menu/domain"
 )
 
 type MenuUseCase struct {

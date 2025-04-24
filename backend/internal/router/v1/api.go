@@ -4,9 +4,9 @@ import (
 	"github.com/bullockz21/pet_project21/internal/bot"
 	menuCtrl "github.com/bullockz21/pet_project21/internal/controller/telegram/menu" // Исправленный путь
 	telegram "github.com/bullockz21/pet_project21/internal/controller/telegram/webhook"
-	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/presenter/menu"
-	menuRepo "github.com/bullockz21/pet_project21/internal/modules/repository/menu"
-	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/usecase/menu"
+	menuPresenter "github.com/bullockz21/pet_project21/internal/modules/menu/presenter"
+	menuRepo "github.com/bullockz21/pet_project21/internal/modules/menu/repository"
+	menuUsecase "github.com/bullockz21/pet_project21/internal/modules/menu/usecase"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

@@ -6,8 +6,8 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/bullockz21/pet_project21/configs"
-	presenterUser "github.com/bullockz21/pet_project21/internal/modules/presenter/user"
-	usecaseUser "github.com/bullockz21/pet_project21/internal/modules/usecase/user"
+	presenterUser "github.com/bullockz21/pet_project21/internal/modules/user/presenter"
+	usecaseUser "github.com/bullockz21/pet_project21/internal/modules/user/usecase"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 

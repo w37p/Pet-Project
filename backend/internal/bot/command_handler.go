@@ -3,7 +3,7 @@ package bot
 import (
 	"context"
 
-	presenterUser "github.com/bullockz21/pet_project21/internal/modules/presenter/user"
+	presenterUser "github.com/bullockz21/pet_project21/internal/modules/user/presenter"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/sirupsen/logrus"
 )
